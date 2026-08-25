@@ -54,7 +54,26 @@ RUN curl --fail --silent --show-error --location \
 # ============================================================
 
 FROM debian:bookworm-slim
+ARG CADDY_VERSION=2.10.2
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        libssl3 \
+        zlib1g \
+        python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl --fail --silent --show-error --location \
+    --proto '=https' \
+    --proto-redir '=https' \
+    --tlsv1.2 \
+    --output /tmp/caddy.tar.gz \
+    "https://github.com/caddyserver/caddy/releases/download/v${CADDY_VERSION}/caddy_${CADDY_VERSION}_linux_amd64.tar.gz" \
+    && tar -xzf /tmp/caddy.tar.gz -C /tmp \
+    && install -m 0755 /tmp/caddy /usr/local/bin/caddy \
+    && rm -rf /tmp/caddy /tmp/caddy.tar.gz
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -76,7 +95,7 @@ COPY --from=mtproxy-builder \
 
 # Railway startup script
 COPY railway/entrypoint.sh /usr/local/bin/entrypoint.sh
-
+COPY railway/Caddyfile /etc/caddy/Caddyfile
 # Configuration
 COPY railway/config.json /etc/tproxy-server/config.json
 COPY railway/profiles.json /etc/tproxy-server/profiles.json
