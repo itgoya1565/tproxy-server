@@ -74,8 +74,8 @@ with open(path, "r", encoding="utf-8") as f:
 config["public_hostname"] = os.environ["PUBLIC_HOSTNAME"]
 
 # tproxy-server remains internal.
-config["listen"] = "0.0.0.0:8080"
-config["admin_listen"] = "0.0.0.0:8081"
+config["listen"] = "127.0.0.1:8080"
+config["admin_listen"] = "127.0.0.1:8081"
 
 config["public_dir"] = "/srv/tproxy-site"
 
