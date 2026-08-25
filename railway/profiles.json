@@ -1,11 +1,10 @@
 {
   "profiles": [
     {
-      "name": "railway",
+      "name": "default",
       "secret": "PLACEHOLDER",
       "backend": "127.0.0.1:2398",
-      "carrier_mode": "https",
-      "limits": {}
+      "carrier_mode": "https"
     }
   ]
 }
