@@ -135,4 +135,23 @@ echo "=========================================="
 echo " All services started"
 echo "=========================================="
 
-wait "${TPROXY_PID}"
+echo "[INFO] Starting Caddy..."
+
+caddy run \
+    --config /etc/caddy/Caddyfile \
+    --adapter caddyfile \
+    > /var/log/tproxy-server/caddy.log 2>&1 &
+
+CADDY_PID=$!
+
+sleep 2
+
+if ! kill -0 "${CADDY_PID}" 2>/dev/null; then
+    echo "[ERROR] Caddy failed to start"
+    cat /var/log/tproxy-server/caddy.log || true
+    exit 1
+fi
+
+echo "[OK] Caddy started on port ${PORT}"
+
+wait -n "${MTPROXY_PID}" "${TPROXY_PID}" "${CADDY_PID}"
