@@ -160,7 +160,7 @@ EOF
 
 echo "[INFO] Validating tproxy-server configuration..."
 
-tproxy-server \
+/usr/local/bin/tproxy-server \
     -config /etc/tproxy-server/config.json \
     -profiles-file /etc/tproxy-server/profiles.json \
     -check
@@ -202,7 +202,7 @@ echo "[OK] MTProxy started"
 
 echo "[INFO] Starting tproxy-server..."
 
-tproxy-server \
+/usr/local/bin/tproxy-server \
     -config /etc/tproxy-server/config.json \
     -profiles-file /etc/tproxy-server/profiles.json \
     > /var/log/tproxy-server/tproxy.log 2>&1 &
