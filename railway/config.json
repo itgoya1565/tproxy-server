@@ -1,7 +1,7 @@
 {
   "public_hostname": "placeholder.example.com",
-  "listen": "0.0.0.0:8080",
-  "admin_listen": "0.0.0.0:8081",
+  "listen": "127.0.0.1:8080",
+  "admin_listen": "127.0.0.1:8081",
   "public_dir": "/srv/tproxy-site",
   "profiles_file": "/etc/tproxy-server/profiles.json",
   "enable_pprof": false,
